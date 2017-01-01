@@ -87,7 +87,9 @@ def main():
         optimizer={
             'enc': opt_enc, 'dec': opt_dec, 
             'dis': opt_dis},
-        device=args.gpu
+        device=args.gpu,
+        lam1 = args.lam1,
+        lam2 = args.lam2
         )
     trainer = training.Trainer(updater, (args.epoch, 'epoch'), out=args.out)
 

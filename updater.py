@@ -18,10 +18,9 @@ class FacadeUpdater(chainer.training.StandardUpdater):
 
     def __init__(self, *args, **kwargs):
         self.enc, self.dec, self.dis = kwargs.pop('models')
-        self.lam1 = 100
-        self.lam2 = 2
+        self.lam1 = kwargs.pop('lam1')
+        self.lam2 = kwargs.pop('lam2')
         super(FacadeUpdater, self).__init__(*args, **kwargs)
-
 
     def loss_enc(self, enc, x_out, t_out, y_out, lam1=100, lam2=1):
         batchsize,_,w,h = y_out.data.shape
