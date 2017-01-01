@@ -24,6 +24,8 @@ class FacadeUpdater(chainer.training.StandardUpdater):
 
 
     def loss_enc(self, enc, x_out, t_out, y_out, lam1=100, lam2=1):
+        print(lam1)
+        print(lam2)
         batchsize,_,w,h = y_out.data.shape
         loss_rec = lam1*(F.mean_absolute_error(x_out, t_out))
         loss_adv = lam2*F.sum(F.softplus(-y_out)) / batchsize / w / h
@@ -32,6 +34,8 @@ class FacadeUpdater(chainer.training.StandardUpdater):
         return loss
         
     def loss_dec(self, dec, x_out, t_out, y_out, lam1=100, lam2=1):
+        print(lam1)
+        print(lam2)
         batchsize,_,w,h = y_out.data.shape
         loss_rec = lam1*(F.mean_absolute_error(x_out, t_out))
         loss_adv = lam2*F.sum(F.softplus(-y_out)) / batchsize / w / h
