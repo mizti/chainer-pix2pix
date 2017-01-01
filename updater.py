@@ -18,6 +18,8 @@ class FacadeUpdater(chainer.training.StandardUpdater):
 
     def __init__(self, *args, **kwargs):
         self.enc, self.dec, self.dis = kwargs.pop('models')
+        self.lam1 = args.lam1
+        self.lam2 = args.lam2
         super(FacadeUpdater, self).__init__(*args, **kwargs)
 
 
@@ -77,10 +79,10 @@ class FacadeUpdater(chainer.training.StandardUpdater):
         y_real = dis(x_in, t_out, test=False)
 
 
-        enc_optimizer.update(self.loss_enc, enc, x_out, t_out, y_fake)
+        enc_optimizer.update(self.loss_enc, enc, x_out, t_out, y_fake, self.lam1, self.lam2)
         for z_ in z:
             z_.unchain_backward()
-        dec_optimizer.update(self.loss_dec, dec, x_out, t_out, y_fake)
+        dec_optimizer.update(self.loss_dec, dec, x_out, t_out, y_fake, self.lam1, self.lam2)
         x_in.unchain_backward()
         x_out.unchain_backward()
         dis_optimizer.update(self.loss_dis, dis, y_real, y_fake)

@@ -39,6 +39,10 @@ def main():
                         help='Interval of snapshot')
     parser.add_argument('--display_interval', type=int, default=100,
                         help='Interval of displaying log to console')
+    parser.add_argument('--lam1', type=int, default=100,
+                        help='lam1')
+    parser.add_argument('--lam2', type=int, default=1,
+                        help='lam1')
     args = parser.parse_args()
 
     print('GPU: {}'.format(args.gpu))
@@ -83,7 +87,10 @@ def main():
         optimizer={
             'enc': opt_enc, 'dec': opt_dec, 
             'dis': opt_dis},
-        device=args.gpu)
+        device=args.gpu,
+        lam1 = args.lam1,
+        lam2 = args.lam2
+        )
     trainer = training.Trainer(updater, (args.epoch, 'epoch'), out=args.out)
 
     snapshot_interval = (args.snapshot_interval, 'iteration')
