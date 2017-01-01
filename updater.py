@@ -18,8 +18,8 @@ class FacadeUpdater(chainer.training.StandardUpdater):
 
     def __init__(self, *args, **kwargs):
         self.enc, self.dec, self.dis = kwargs.pop('models')
-        self.lam1 = args.lam1
-        self.lam2 = args.lam2
+        self.lam1 = 100
+        self.lam2 = 2
         super(FacadeUpdater, self).__init__(*args, **kwargs)
 
 
